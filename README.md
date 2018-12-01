@@ -2,6 +2,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
+## Important Links
+
+https://codetower.github.io/es6-features/?utm_campaign=read_more&utm_medium=blog&utm_source=mybridge#Modules%20&%20Module%20Loaders
+
 In the project directory, you can run:
 
 ### `npm start`
