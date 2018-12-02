@@ -12,6 +12,18 @@ export default class App extends Component {
     currentState: "all"
   };
 
+  componentDidMount() {
+    document.addEventListener("copy", this.onCopy);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("copy", this.onCopy);
+  }
+
+  onCopy = () => {
+    alert("copied");
+  };
+
   onChange = e => {
     this.setState({ value: e.target.value });
   };
