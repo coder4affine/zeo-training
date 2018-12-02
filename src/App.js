@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import TodoForm from "./todoForm";
 
 export default class App extends Component {
   static propTypes = {};
@@ -16,6 +17,7 @@ export default class App extends Component {
   };
 
   submit = e => {
+    console.log(e);
     e.preventDefault();
     const { value, todoList, currentState } = this.state;
     this.setState(
@@ -91,24 +93,26 @@ export default class App extends Component {
     return (
       <div>
         <h3> TODO Application</h3>
-        <form onSubmit={this.submit}>
-          <input type="text" value={value} onChange={this.onChange} required />
-          <input type="submit" value="Submit" />
-          {filteredList.map((x, index) => (
-            <div key={index}>
-              <span onClick={() => this.changeStatus(x)}>
-                <span>{x.todoText}</span>
-                <span style={{ color: "green" }}> {x.status}</span>
-              </span>
-              <span
-                style={{ color: "red" }}
-                onClick={() => this.deleteRecord(x)}
-              >
-                Delete
-              </span>
-            </div>
-          ))}
-        </form>
+        {/* form  */}
+        <TodoForm
+          onSubmit={this.submit}
+          value={value}
+          onChange={this.onChange}
+          label="Todo"
+        />
+        {/* data */}
+        {filteredList.map((x, index) => (
+          <div key={index}>
+            <span onClick={() => this.changeStatus(x)}>
+              <span>{x.todoText}</span>
+              <span style={{ color: "green" }}> {x.status}</span>
+            </span>
+            <span style={{ color: "red" }} onClick={() => this.deleteRecord(x)}>
+              Delete
+            </span>
+          </div>
+        ))}
+        {/* filtering */}
         <button onClick={() => this.filterData("all")}>All Task</button>
         <button onClick={() => this.filterData("done")}>Completed Task</button>
         <button onClick={() => this.filterData("pending")}>Pending Task</button>
