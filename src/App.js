@@ -1,26 +1,118 @@
 import React, { Component } from "react";
-import "./App.css";
+import PropTypes from "prop-types";
 
-class App extends Component {
+export default class App extends Component {
+  static propTypes = {};
+
   state = {
-    show: false
+    value: "",
+    todoList: [],
+    filteredList: [],
+    currentState: "all"
   };
 
-  showHide = () => {
-    this.setState(state => {
-      return { show: !state.show };
+  onChange = e => {
+    this.setState({ value: e.target.value });
+  };
+
+  submit = e => {
+    e.preventDefault();
+    const { value, todoList, currentState } = this.state;
+    this.setState(
+      {
+        todoList: [
+          ...todoList,
+          {
+            id: new Date().getUTCMilliseconds(),
+            todoText: value,
+            status: "pending"
+          }
+        ],
+        value: ""
+      },
+      () => {
+        this.filterData(currentState);
+      }
+    );
+  };
+
+  changeStatus = data => {
+    const { todoList, currentState } = this.state;
+
+    const index = todoList.findIndex(x => x.id === data.id);
+    const updatedData = [
+      ...todoList.slice(0, index),
+      { ...data, status: data.status === "pending" ? "done" : "pending" },
+      ...todoList.slice(index + 1)
+    ];
+    this.setState({ todoList: updatedData }, () => {
+      this.filterData(currentState);
     });
   };
 
-  render = () => {
-    const { show } = this.state;
+  deleteRecord = data => {
+    const { todoList, currentState } = this.state;
+
+    const index = todoList.findIndex(x => x.id === data.id);
+    const updatedData = [
+      ...todoList.slice(0, index),
+      ...todoList.slice(index + 1)
+    ];
+    this.setState({ todoList: updatedData }, () => {
+      this.filterData(currentState);
+    });
+  };
+
+  filterData = type => {
+    const filteredList = this.getFilterData(type);
+    this.setState({ filteredList, currentState: type });
+  };
+
+  getFilterData = type => {
+    const { todoList } = this.state;
+    let filteredList = [];
+    switch (type) {
+      case "pending":
+        filteredList = todoList.filter(x => x.status === "pending");
+        break;
+      case "done":
+        filteredList = todoList.filter(x => x.status === "done");
+        break;
+
+      default:
+        filteredList = todoList;
+        break;
+    }
+    return filteredList;
+  };
+
+  render() {
+    const { value, filteredList } = this.state;
     return (
-      <div className="app-container">
-        {show && <p>Show</p>}
-        <button onClick={this.showHide}>Show/Hide</button>
+      <div>
+        <h3> TODO Application</h3>
+        <form onSubmit={this.submit}>
+          <input type="text" value={value} onChange={this.onChange} required />
+          <input type="submit" value="Submit" />
+          {filteredList.map((x, index) => (
+            <div key={index}>
+              <span onClick={() => this.changeStatus(x)}>
+                <span>{x.todoText}</span>
+                <span style={{ color: "green" }}> {x.status}</span>
+              </span>
+              <span
+                style={{ color: "red" }}
+                onClick={() => this.deleteRecord(x)}
+              >
+                Delete
+              </span>
+            </div>
+          ))}
+        </form>
+        <button onClick={() => this.filterData("all")}>All Task</button>
+        <button onClick={() => this.filterData("done")}>Completed Task</button>
+        <button onClick={() => this.filterData("pending")}>Pending Task</button>
       </div>
     );
-  };
+  }
 }
-
-export default App;
