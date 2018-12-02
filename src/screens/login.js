@@ -32,8 +32,12 @@ export default class login extends Component {
     });
   };
 
-  onSubmitForm = data => {
-    alert(JSON.stringify(data));
+  onSubmitForm = (value, actions) => {
+    setTimeout(() => {
+      actions.setSubmitting(false);
+      actions.setErrors({ password: "password not valid" });
+      actions.setStatus({ password: "Set some arbitrary status or data" });
+    }, 2000);
   };
 
   render() {
@@ -49,28 +53,42 @@ export default class login extends Component {
             handleChange,
             handleBlur,
             values,
-            errors
+            errors,
+            isSubmitting
           }) => (
             <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.username}
-              />
-              {errors.username && <div>{errors.username}</div>}
-              <input
-                type="password"
-                name="password"
-                placeholder="Username"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.password}
-              />
-              {errors.password && <div>{errors.password}</div>}
-              <input type="submit" value="submit" />
+              <div>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.username}
+                />
+                {errors.username && (
+                  <div style={{ color: "red" }}>{errors.username}</div>
+                )}
+              </div>
+              <div>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Username"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                />
+                {errors.password && (
+                  <div style={{ color: "red" }}>{errors.password}</div>
+                )}
+              </div>
+              <div>
+                <input
+                  type="submit"
+                  value={isSubmitting ? "loading..." : "Submit"}
+                />
+              </div>
             </form>
           )}
         />
