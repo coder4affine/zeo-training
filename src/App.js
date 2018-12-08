@@ -21,11 +21,11 @@ export default class App extends Component {
     return (
       <Router>
         <Fragment>
-          <Header />
+          {/* <Header /> */}
           <AppContext.Provider value={this.state}>
             <Route />
           </AppContext.Provider>
-          <Footer />
+          {/* <Footer /> */}
         </Fragment>
       </Router>
     );
