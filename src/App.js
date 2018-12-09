@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { BrowserRouter as Router } from "react-router-dom";
 import Route from "./route";
-import Header from "./header";
+import Header from "./components/Header/header";
 import Footer from "./footer";
 
 export const AppContext = React.createContext();
@@ -21,7 +21,7 @@ export default class App extends Component {
     return (
       <Router>
         <Fragment>
-          {/* <Header /> */}
+          <Header />
           <AppContext.Provider value={this.state}>
             <Route />
           </AppContext.Provider>

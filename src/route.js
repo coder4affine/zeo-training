@@ -2,24 +2,26 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { Route, Redirect } from "react-router-dom";
 import Loadable from "react-loadable";
-
-// import Home from "./screens/Home/home";
-// import Details from "./screens/Details/details";
-// import Settings from "./screens/Settings/settings";
+import Loading from "./components/Loading/loading";
 
 const AsyncHome = Loadable({
   loader: () => import("./screens/Home/home"),
-  loading: () => <div>Loading...</div>
+  loading: () => <Loading />
 });
 
-const AsyncDetails = Loadable({
-  loader: () => import("./screens/Details/details"),
-  loading: () => <div>Loading...</div>
+const AsyncCourses = Loadable({
+  loader: () => import("./screens/Courses/courses"),
+  loading: () => <Loading />
 });
 
-const AsyncSettings = Loadable({
-  loader: () => import("./screens/Settings/settings"),
-  loading: () => <div>Loading...</div>
+const AsyncCourse = Loadable({
+  loader: () => import("./screens/Courses/course"),
+  loading: () => <Loading />
+});
+
+const AsyncAbout = Loadable({
+  loader: () => import("./screens/About/about"),
+  loading: () => <Loading />
 });
 
 const isAuthenticated = true;
@@ -55,8 +57,10 @@ export default class route extends Component {
     return (
       <Fragment>
         <Route path="/" exact component={AsyncHome} />
-        <Route path="/details/" component={AsyncDetails} />
-        <PrivateRoute path="/settings/" component={AsyncSettings} />
+        <Route path="/courses/" component={AsyncCourses} />
+        <Route path="/course/:id" component={AsyncCourse} />
+        {/* <Route path="/course" component={AsyncCourse} /> */}
+        <Route path="/about" component={AsyncAbout} />
       </Fragment>
     );
   }
