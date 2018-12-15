@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import Tooltip from "../../components/Tooltip/tooltip";
 
 const courseListRow = ({ course }) => {
   return (
@@ -11,7 +12,9 @@ const courseListRow = ({ course }) => {
       <td>
         <Link to={`/course/${course.id}`}>{course.title}</Link>
       </td>
-      <td>{course.authorId}</td>
+      <td>
+        <Tooltip text={`tooptip ${course.id}`}>{course.authorId}</Tooltip>
+      </td>
       <td>{course.category}</td>
       <td>{course.length}</td>
     </tr>
