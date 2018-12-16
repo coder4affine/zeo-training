@@ -1,4 +1,4 @@
-import React, { Component, Fragment, StrictMode } from "react";
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { BrowserRouter as Router } from "react-router-dom";
 import Route from "./route";
@@ -19,17 +19,18 @@ export default class App extends Component {
 
   render() {
     return (
-      <Router>
-        <StrictMode>
+      <div>
+        <Router>
           <Fragment>
+            <h1>Zeolearn APP</h1>
             <Header />
             <AppContext.Provider value={this.state}>
               <Route />
             </AppContext.Provider>
             {/* <Footer /> */}
           </Fragment>
-        </StrictMode>
-      </Router>
+        </Router>
+      </div>
     );
   }
 }

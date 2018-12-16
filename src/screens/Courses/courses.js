@@ -8,7 +8,7 @@ import CourseList from "./courseList";
 
 import actions from "../../actions";
 
-class courses extends Component {
+export class Courses extends Component {
   static propTypes = {};
 
   constructor(props) {
@@ -23,6 +23,9 @@ class courses extends Component {
 
     if (loading) {
       return <Loading />;
+    }
+    if (error) {
+      return <h2>Oops! something went wrong</h2>;
     }
     return (
       <div>
@@ -48,4 +51,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(courses);
+)(Courses);
