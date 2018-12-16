@@ -6,23 +6,17 @@ import Loading from "../Loading/loading";
 const header = ({ loading }) => {
   return (
     <nav>
-      <Link to="/" activeClassName="active">
-        Home
-      </Link>
+      <Link to="/">Home</Link>
       {"|"}
-      <Link to="/courses" activeClassName="active">
-        Courses
-      </Link>
+      <Link to="/courses">Courses</Link>
       {"|"}
-      <Link to="/about" activeClassName="about">
-        About
-      </Link>
+      <Link to="/about">About</Link>
       {loading && <Loading />}
     </nav>
   );
 };
 
-header.PropTypes = {
+header.propTypes = {
   loading: PropTypes.bool
 };
 

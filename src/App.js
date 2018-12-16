@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment, StrictMode } from "react";
 import PropTypes from "prop-types";
 import { BrowserRouter as Router } from "react-router-dom";
 import Route from "./route";
@@ -20,13 +20,15 @@ export default class App extends Component {
   render() {
     return (
       <Router>
-        <Fragment>
-          <Header />
-          <AppContext.Provider value={this.state}>
-            <Route />
-          </AppContext.Provider>
-          {/* <Footer /> */}
-        </Fragment>
+        <StrictMode>
+          <Fragment>
+            <Header />
+            <AppContext.Provider value={this.state}>
+              <Route />
+            </AppContext.Provider>
+            {/* <Footer /> */}
+          </Fragment>
+        </StrictMode>
       </Router>
     );
   }

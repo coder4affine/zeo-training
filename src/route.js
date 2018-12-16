@@ -1,28 +1,15 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment, lazy, Suspense } from "react";
 import PropTypes from "prop-types";
-import { Route, Redirect } from "react-router-dom";
-import Loadable from "react-loadable";
+import { Route, Redirect, Switch } from "react-router-dom";
 import Loading from "./components/Loading/loading";
 
-const AsyncHome = Loadable({
-  loader: () => import("./screens/Home/home"),
-  loading: () => <Loading />
-});
+const AsyncHome = lazy(() => import("./screens/Home/home"));
 
-const AsyncCourses = Loadable({
-  loader: () => import("./screens/Courses/courses"),
-  loading: () => <Loading />
-});
+const AsyncCourses = lazy(() => import("./screens/Courses/courses"));
 
-const AsyncCourse = Loadable({
-  loader: () => import("./screens/Courses/course"),
-  loading: () => <Loading />
-});
+const AsyncCourse = lazy(() => import("./screens/Courses/course"));
 
-const AsyncAbout = Loadable({
-  loader: () => import("./screens/About/about"),
-  loading: () => <Loading />
-});
+const AsyncAbout = lazy(() => import("./screens/About/about"));
 
 const isAuthenticated = true;
 
@@ -49,19 +36,19 @@ function PrivateRoute({ component: Component, ...rest }) {
 }
 
 export default class route extends Component {
-  static propTypes = {
-    prop: PropTypes
-  };
+  static propTypes = {};
 
   render() {
     return (
-      <Fragment>
-        <Route path="/" exact component={AsyncHome} />
-        <Route path="/courses/" component={AsyncCourses} />
-        <Route path="/course/:id" component={AsyncCourse} />
-        {/* <Route path="/course" component={AsyncCourse} /> */}
-        <Route path="/about" component={AsyncAbout} />
-      </Fragment>
+      <Suspense fallback={<Loading />}>
+        <Switch>
+          <Route path="/" exact component={() => <AsyncHome />} />
+          <Route path="/courses/" component={() => <AsyncCourses />} />
+          <Route path="/course/:id" component={() => <AsyncCourse />} />
+          <Route path="/course" component={() => <AsyncCourse />} />
+          <Route path="/about" component={() => <AsyncAbout />} />
+        </Switch>
+      </Suspense>
     );
   }
 }
